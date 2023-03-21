@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyBuglePlanet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6dd88c038c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" th:href="@{/img/Favicon.ico}">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+   <a class="navbar-brand" th:href="@{/}">
+      <img th:src="@{/img/Logo.png}" width="50px" height="50px" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/news}">Noticias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/journalists}">Periodistas</a>
+            </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" th:href="@{/contact}">Contacto</a>
+        </li>
+      </ul>
+      <a th:href="@{/signIn}"><button class="btn btn-outline-danger"th:if ="${session.usuariosession ==null}">Ingresar</button></a>
+      <a th:href="@{/post}"><button class="btn btn-outline-danger" sec:authorize="hasRole('JOURNALIST')" th:if ="${session.usuariosession !=null}"  >Publicar noticias</button></a>
+        <button class="btn btn-outline-danger fa-solid fa-user dropdown-toggle" th:if ="${session.usuariosession !=null}" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" sec:authorize="hasAnyRole('USER', 'JOURNALIST')" th:href="@{/profile}">Mi perfil</a></li>
+          <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/users}">Administrar usuarios</a></li>
+          <li><a class="dropdown-item" href="@{/signOff}">Cerrar sesion</a></li>
+        </ul>
+    </div>
+  </div>
+</nav>
+
+<br></br>
+
+<div class="form">
+    <form action="" method="post">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Nombre completo" required>
+        </div>
+        <div class="col">
+          <input type="email" class="form-control" placeholder="Correo electronico" required>
+        </div>
+      </div>
+      <div class="mb-3">
+        <textarea rows="10" class="form-control" placeholder="Ingrese su consulta aqui" required></textarea>
+      </div>
+      <button class="btn btn-dark" type="Reset">Limpiar formulario</button>
+      <button class="btn btn-dark" type="submit">Enviar</button>
+    </form>
+  </div>
+  </body>
+  </html>
