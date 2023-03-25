@@ -37,7 +37,7 @@ public class PortalController {
         return "index.html";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/userprofile")
     public String profile() {
         return "profile.html";
     }

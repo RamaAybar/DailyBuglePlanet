@@ -46,39 +46,13 @@
   </div>
 </nav>
 
-<form>
-  <div class="form-group mb-3">
-    <select class="form-select" name="clasificacion"  aria-label="Seleccionar tipo de transacción" required>
-        <option value="" selected>Seleccionar tipo de noticia</option>
-        <option th:each="p : ${T(MrHouse.enumeraciones.TransaccionPropiedad).values()}" 
-                th:value="${p}"
-                th:text="${p}">
-        </option>
-    </select>
-  </div>
-    <div class="form-group mb-3">
-      <select class="form-select" name="provincias"  aria-label="Seleccionar provincia" required>
-          <option value="" selected>Seleccionar provincia</option>
-          <option th:each="p : ${T(MrHouse.enumeraciones.ProvinciaEnum).values()}" 
-                  th:value="${p}" 
-                  th:text="${p}"></option>
-      </select>
-  </div>
-    <div class="form-group mb-3">
-      <input type="text" class="form-control" name="titulo" placeholder="titulo" th:value="${titulo}">
-  </div> 
-    <div class="form-group mb-3">
-      <label>Imagen</label>
-      <input type="file" class="form-control" name="archivo" th:value="${image}">
-  </div>
-</div>
-  <div class="mb-3">
-    <label for="mensaje">Ingresar noticia</label>
-    <textarea rows="10" class="form-control" id="mensaje" required></textarea>
-  </div>
-  <button class="btn btn-danger" type="Reset">Limpiar formulario</button>
-  <button class="btn btn-danger" type="submit">Enviar</button>
-</form>       
-
-</body>
+        <div>
+            <a class="nav-link text-white" href="/secciones/Noticia.html">
+                <button type="button" class="btn btn-danger">
+                  Crear noticia nueva
+                </button>
+              </a>
+            <!--Acá van las noticias-->
+        </div>
+    </body>
 </html>
