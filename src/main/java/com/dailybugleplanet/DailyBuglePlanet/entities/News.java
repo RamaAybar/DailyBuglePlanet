@@ -4,9 +4,12 @@
 package com.dailybugleplanet.DailyBuglePlanet.entities;
 
 // @author Ramiro Aybar
+import com.dailybugleplanet.DailyBuglePlanet.enums.Classification;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -46,6 +49,9 @@ public class News {
 
     @OneToOne
     private Image image;
+
+    @Enumerated(EnumType.STRING)
+    private Classification classification;
 
     public String getId() {
         return id;
@@ -101,5 +107,13 @@ public class News {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public Classification getClasification() {
+        return classification;
+    }
+
+    public void setClasification(Classification clasification) {
+        this.classification = clasification;
     }
 }

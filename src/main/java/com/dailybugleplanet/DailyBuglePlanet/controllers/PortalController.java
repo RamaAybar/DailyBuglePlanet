@@ -34,7 +34,7 @@ public class PortalController {
         }
         model.put("action", "signIn");
         model.put("roles", Roles.values());
-        return "index.html";
+        return "signIn.html";
     }
 
     @GetMapping("/userprofile")
@@ -51,7 +51,7 @@ public class PortalController {
     public String signUpForm(ModelMap model) {
         model.put("roles", Roles.values());
         model.put("action", "signUp");
-        return "signIn.html";
+        return "signUp.html";
     }
 
     @GetMapping("/newsPortal")

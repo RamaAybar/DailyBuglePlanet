@@ -4,9 +4,9 @@
 package com.dailybugleplanet.DailyBuglePlanet.services;
 
 // @author Ramiro Aybar
-
 import com.dailybugleplanet.DailyBuglePlanet.entities.Account;
 import com.dailybugleplanet.DailyBuglePlanet.entities.News;
+import com.dailybugleplanet.DailyBuglePlanet.enums.Classification;
 import com.dailybugleplanet.DailyBuglePlanet.enums.Roles;
 import com.dailybugleplanet.DailyBuglePlanet.exceptions.NewsException;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class NewsService {
 
     @Transactional
     public void createNews(String title, String body,
-            MultipartFile photo, String journalistId) throws NewsException {
+            MultipartFile photo, String journalistId, Classification clasification) throws NewsException {
 
         validateData(title, body, photo);
         if (null == journalistId || journalistId.isEmpty()) {
@@ -44,6 +44,7 @@ public class NewsService {
         newNews.setBody(body);
         newNews.setReleaseDate(new Date(System.currentTimeMillis()));
         newNews.setImage(imageService.save(photo));
+        newNews.setClasification(clasification);
         setCreator(newNews, journalistId);
         newsRepository.save(newNews);
     }
@@ -77,7 +78,7 @@ public class NewsService {
 
     @Transactional
     public void modifyNews(String id, String title,
-            String body, MultipartFile photo) throws NewsException {
+            String body, MultipartFile photo, Classification clasification) throws NewsException {
         validateData(title, body, photo);
 
         News news = getNewsById(id);
@@ -85,6 +86,7 @@ public class NewsService {
         news.setBody(body);
         news.setReleaseDate(new Date(System.currentTimeMillis()));
         news.setImage(imageService.save(photo));
+        news.setClasification(clasification);
         newsRepository.save(news);
 
     }

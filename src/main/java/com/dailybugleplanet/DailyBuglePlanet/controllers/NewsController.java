@@ -2,14 +2,14 @@
 // Curso Egg FullStack
  */
 package com.dailybugleplanet.DailyBuglePlanet.controllers;
-
-// @author JulianCVidal
-
 import com.dailybugleplanet.DailyBuglePlanet.entities.Account;
 import com.dailybugleplanet.DailyBuglePlanet.entities.News;
+import com.dailybugleplanet.DailyBuglePlanet.enums.Classification;
 import com.dailybugleplanet.DailyBuglePlanet.exceptions.NewsException;
+import com.dailybugleplanet.DailyBuglePlanet.repositories.NewsRepository;
 import com.dailybugleplanet.DailyBuglePlanet.services.NewsService;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +28,8 @@ public class NewsController {
 
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private NewsRepository newsRepository;
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_JOURNALIST')")
     @GetMapping
@@ -36,6 +38,15 @@ public class NewsController {
         List<News> newsList = newsService.getAllNews();
         model.put("newsList", newsList);
         return "news-table";
+    }
+
+    @GetMapping("/byClassification")
+    public List<News> getNewsByClassification(@RequestParam List<String> classifications) {
+        List<Classification> classificationList = classifications.stream()
+                .map(String::toUpperCase)
+                .map(Classification::valueOf)
+                .collect(Collectors.toList());
+        return newsRepository.findByClassification(classificationList);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_JOURNALIST')")
@@ -52,9 +63,9 @@ public class NewsController {
     public String createNews(
             @RequestParam String title, @RequestParam String body,
             @RequestParam String journalistId,
-            @RequestParam MultipartFile image, ModelMap model) {
+            @RequestParam MultipartFile image, ModelMap model, Classification classification) {
         try {
-            newsService.createNews(title, body, image, journalistId);
+            newsService.createNews(title, body, image, journalistId, classification);
 
             model.put("newsAdded", "added successfully");
         } catch (NewsException ne) {
@@ -83,10 +94,11 @@ public class NewsController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_JOURNALIST')")
     @PostMapping("/modify/{id}")
     public String modifyNews(@PathVariable String id, @RequestParam String title,
-            @RequestParam String body, @RequestParam MultipartFile photo, ModelMap model) {
+            @RequestParam String body, @RequestParam MultipartFile photo, ModelMap model,
+            Classification classification) {
 
         try {
-            newsService.modifyNews(id, title, body, photo);
+            newsService.modifyNews(id, title, body, photo, classification);
 
         } catch (NewsException ne) {
             model.put("error", ne.getMessage());
