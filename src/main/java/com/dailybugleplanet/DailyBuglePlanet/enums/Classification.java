@@ -7,7 +7,7 @@ package com.dailybugleplanet.DailyBuglePlanet.enums;
 
 /**
  *
- * @author Ramiro
+ * @author Ramiro Aybar
  */
 public enum Classification {
     DEPORTES,

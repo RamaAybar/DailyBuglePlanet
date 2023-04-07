@@ -3,7 +3,7 @@
  */
 package com.dailybugleplanet.DailyBuglePlanet.controllers;
 
-// @author JulianCVidal
+// @author Ramiro Aybar
 
 import com.dailybugleplanet.DailyBuglePlanet.entities.Account;
 import com.dailybugleplanet.DailyBuglePlanet.exceptions.NewsException;
